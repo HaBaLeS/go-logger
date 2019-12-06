@@ -12,7 +12,7 @@ import (
 
 func BenchmarkLoggerLog(b *testing.B) {
 	b.StopTimer()
-	log, err := New("test", 1)
+	log, err := NewLogger("test", 1)
 	if err != nil {
 		panic(err)
 	}
@@ -57,7 +57,7 @@ func BenchmarkLoggerLog(b *testing.B) {
 
 func BenchmarkLoggerNew(b *testing.B) {
 	for n := 0; n <= b.N; n++ {
-		log, err := New("test", 1)
+		log, err := NewLogger("test", 1)
 		if err != nil && log == nil {
 			panic(err)
 		}
@@ -65,7 +65,7 @@ func BenchmarkLoggerNew(b *testing.B) {
 }
 
 func TestLoggerNew(t *testing.T) {
-	log, err := New("test", 1)
+	log, err := NewLogger("test", 1)
 	if err != nil {
 		panic(err)
 	}
@@ -145,7 +145,7 @@ func BenchmarkNewWorker(b *testing.B) {
 
 func TestLogger_SetFormat(t *testing.T) {
 	var buf bytes.Buffer
-	log, err := New("pkgname", 0, &buf)
+	log, err := NewLogger("pkgname", 0, &buf)
 	if err != nil || log == nil {
 		panic(err)
 	}
@@ -208,7 +208,7 @@ func TestLogger_SetFormat(t *testing.T) {
 func TestSetDefaultFormat(t *testing.T) {
 	SetDefaultFormat("%{module} %{lvl} %{message}")
 	var buf bytes.Buffer
-	log, err := New("pkgname", 0, &buf)
+	log, err := NewLogger("pkgname", 0, &buf)
 	if err != nil || log == nil {
 		panic(err)
 	}
@@ -254,7 +254,7 @@ func TestLogLevel(t *testing.T) {
 	}
 
 	var buf bytes.Buffer
-	log, err := New("pkgname", 0, &buf)
+	log, err := NewLogger("pkgname", 0, &buf)
 	if err != nil {
 		panic(err)
 	}

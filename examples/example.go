@@ -1,14 +1,14 @@
 package main
 
 import (
+	"github.com/HaBaLeS/go-logger"
 	"os"
-	"github.com/apsdehal/go-logger"
 )
 
 func main () {
 	// Get the instance for logger class
 	// Third option is optional and is instance of type io.Writer, defaults to os.Stderr
-	log, err := logger.New("test", 1, os.Stdout)
+	log, err := logger.NewLogger("test", 1, os.Stdout)
 	if err != nil {
 		panic(err) // Check for error
 	}
@@ -31,6 +31,6 @@ func main () {
 	log.Warning("This is Warning!")
 	// Also you can set your format as default format for all new loggers
 	logger.SetDefaultFormat("%{message}")
-	log2, _ := logger.New("pkg", 1, os.Stdout)
+	log2, _ := logger.NewLogger("pkg", 1, os.Stdout)
 	log2.Error("This is Error!")
 }

@@ -1,7 +1,5 @@
-// Package name declaration
 package logger
 
-// Import packages
 import (
 	"bytes"
 	"fmt"
@@ -256,7 +254,7 @@ func initFormatPlaceholders() {
 // Returns a new instance of logger class, module is the specific module for which we are logging
 // , color defines whether the output is to be colored or not, out is instance of type io.Writer defaults
 // to os.Stderr
-func New(args ...interface{}) (*Logger, error) {
+func NewLogger(args ...interface{}) (*Logger, error) {
 	//initColors()
 
 	var module string = "DEFAULT"
@@ -309,19 +307,16 @@ func (l *Logger) log_internal(lvl LogLevel, message string, pos int) {
 // Fatal is just like func l.Critical logger except that it is followed by exit to program
 func (l *Logger) Fatal(message string) {
 	l.log_internal(CriticalLevel, message, 2)
-	os.Exit(1)
 }
 
 // FatalF is just like func l.CriticalF logger except that it is followed by exit to program
 func (l *Logger) FatalF(format string, a ...interface{}) {
 	l.log_internal(CriticalLevel, fmt.Sprintf(format, a...), 2)
-	os.Exit(1)
 }
 
 // FatalF is just like func l.CriticalF logger except that it is followed by exit to program
 func (l *Logger) Fatalf(format string, a ...interface{}) {
 	l.log_internal(CriticalLevel, fmt.Sprintf(format, a...), 2)
-	os.Exit(1)
 }
 
 // Panic is just like func l.Critical except that it is followed by a call to panic
@@ -453,8 +448,8 @@ func (l *Logger) StackAsCritical(message string) {
 // Returns a string with the execution stack for this goroutine
 func Stack() string {
 	buf := make([]byte, 1000000)
-	runtime.Stack(buf, false)
-	return string(buf)
+	r := runtime.Stack(buf, false)
+	return string(buf[0:r])
 }
 
 // Returns the loglevel as string
@@ -469,3 +464,4 @@ func (info *Info) logLevelString() string {
 	}
 	return logLevels[info.Level-1]
 }
+
